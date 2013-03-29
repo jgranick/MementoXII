@@ -81,7 +81,11 @@ class Tweenie {
 		if( Reflect.hasField(parent,varName) )
 			return create_(parent, varName, to, tp, duration_ms);
 		else
+		#if flash
 			return create_(parent, untyped __unprotect__(varName), to, tp, duration_ms); // champ obfuscqué
+		#else
+			return create_(parent, varName, to, tp, duration_ms);
+		#end
 	}
 	
 	/**

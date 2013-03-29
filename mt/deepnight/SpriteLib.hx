@@ -167,10 +167,10 @@ typedef SpriteAnimation = {frames:Array<Int>, durations:Array<Int>};
 
 class SpriteLib {
 	public var bmp				: BitmapData;
-	var groups					: Hash<Array<flash.geom.Rectangle>>;
-	var anims					: Hash<SpriteAnimation>;
+	var groups					: Map<String, Array<flash.geom.Rectangle>>;
+	var anims					: Map<String, SpriteAnimation>;
 	var lastGroup				: Null<String>;
-	var frameRandDraw			: Hash<Array<Int>>;
+	var frameRandDraw			: Map<String, Array<Int>>;
 	public var defaultCenterX	: Float;
 	public var defaultCenterY	: Float;
 	var sliceUnitX				: Int;
@@ -178,9 +178,9 @@ class SpriteLib {
 	
 	public function new(bd:BitmapData) {
 		bmp = bd;
-		groups = new Hash();
-		anims = new Hash();
-		frameRandDraw = new Hash();
+		groups = new Map();
+		anims = new Map();
+		frameRandDraw = new Map();
 		lastGroup = null;
 		defaultCenterX = 0.5;
 		defaultCenterY = 1;

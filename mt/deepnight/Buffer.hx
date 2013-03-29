@@ -14,7 +14,7 @@ class Buffer {
 	
 	public var graphics		: flash.display.Graphics;
 	public var dm			: mt.DepthManager;
-	public var rect(getRect, never)	: flash.geom.Rectangle;
+	public var rect(get_rect, never)	: flash.geom.Rectangle;
 	var pt0					: flash.geom.Point;
 	
 	var pixelRatio			: Float; // =width/height (ex: =2/1)
@@ -135,7 +135,7 @@ class Buffer {
 		return bd;
 	}
 	
-	public inline function getRect() {
+	public inline function get_rect() {
 		return new flash.geom.Rectangle(render.x, render.y, width, height);
 	}
 	

@@ -1,8 +1,8 @@
 -cp src
+-cp gfx
 -swf swf/ludumdare23.swf
 -swf-header 420:600:30:FFFFFF
 -swf-lib obj\ludumdare23Resources.swf
 --flash-strict
 -swf-version 10
 -main Main
---connect 880

@@ -60,13 +60,13 @@ class Lib {
 	#if flash9
 	public static function setTraceHeader(h:String) {
 		// ATTENTION : provoque tacitement un redirect traces sur Firebug !
-		if ( !haxe.Firebug.detect() )
-			return;
-		haxe.Log.trace = function(v,?inf:haxe.PosInfos) {
-			if ( inf != null && inf.customParams == null )
-				inf.customParams = ["debug"];
-			haxe.Firebug.trace( h+Std.string(v), inf);
-		}
+		//if ( !haxe.Firebug.detect() )
+			//return;
+		//haxe.Log.trace = function(v,?inf:haxe.PosInfos) {
+			//if ( inf != null && inf.customParams == null )
+				//inf.customParams = ["debug"];
+			//haxe.Firebug.trace( h+Std.string(v), inf);
+		//}
 	}
 
 	public static function atLeastVersion(version:String) { // format : xx.xx.xx.xx ou xx,xx,xx,xx

@@ -1,6 +1,6 @@
 import mt.deepnight.SpriteLib;
 
-class Entity implements haxe.Public {
+@:publicFields class Entity {
 	var world	: World;
 	var cx		: Int;
 	var cy		: Int;

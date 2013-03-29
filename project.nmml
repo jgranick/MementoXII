@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="Memento XII" package="mt.deepnight.mementoxii" version="1.0.0" company="DeepNight" />
+	<app path="bin" main="Main" />
+	
+	<window width="420" height="600" fps="30" orientation="portrait" />
+	
+	<haxeflag name="-swf-lib obj\ludumdare23Resources.swf" if="flash" />
+	
+	<source path="src" />
+	<source path="gfx" />
+	<source path="fonts" />
+	
+	<haxelib name="pazu" />
+	
+</project>

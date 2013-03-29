@@ -6,8 +6,8 @@ class Key {
 
 	public static function init() {
 		var stage = flash.Lib.current.stage;
-		stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,callback(onKey,true));
-		stage.addEventListener(flash.events.KeyboardEvent.KEY_UP,callback(onKey,false));
+		stage.addEventListener(flash.events.KeyboardEvent.KEY_DOWN,onKey.bind (true));
+		stage.addEventListener(flash.events.KeyboardEvent.KEY_UP,onKey.bind (false));
 		stage.addEventListener(flash.events.Event.DEACTIVATE,function(_) kcodes = new Array());
 		stage.addEventListener(flash.events.Event.ENTER_FRAME,onEnterFrame);
 	}

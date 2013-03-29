@@ -8,19 +8,21 @@ import flash.ui.Keyboard;
 import World;
 import Type;
 
-class GfxTiles extends flash.display.BitmapData {}
-class DefaultFont extends flash.text.Font {}
+@:bitmap("tiles.png") class GfxTiles extends flash.display.BitmapData { }
+#if !flash
+@:font("04B_03.TTF") class DefaultFont extends flash.text.Font { }
+#end
 
 typedef Hotspot = {
 	var hit		: flash.display.Sprite;
 	var spr		: Null<DSprite>;
 	var name	: String;
-	var act		: Hash<Dynamic>;
+	var act		: Map<String, Dynamic>;
 }
 
 class Manager {//}
 	static var SHOW_COLLISIONS = false;
-	static var INAMES = new Hash();
+	static var INAMES = new Map();
 	static var SOUNDS = mt.data.Sounds.directory("sfx");
 	static var EXTENDED = true;
 	
@@ -46,7 +48,7 @@ class Manager {//}
 	public static var UNIQ = 0;
 	
 	#if debug
-	var debug		: mt.kiroukou.debug.Stats;
+	//var debug		: mt.kiroukou.debug.Stats;
 	#end
 	
 	var root		: flash.display.MovieClip;
@@ -68,7 +70,7 @@ class Manager {//}
 	var afterPop	: Null<Void->Void>;
 	var lastSpot	: Null<Hotspot>;
 	var inventory	: List<String>;
-	var triggers	: Hash<Int>;
+	var triggers	: Map<String,Int>;
 	var roomBg		: DSprite;
 	var snapshot	: flash.display.Bitmap;
 	var invCont		: flash.display.Sprite;
@@ -110,7 +112,7 @@ class Manager {//}
 		hotSpots = new Array();
 		playerPath = new Array();
 		inventory = new List();
-		triggers = new Hash();
+		triggers = new Map();
 		popQueue = new List();
 		dispScale = 0;
 		footstep = 0;
@@ -151,7 +153,11 @@ class Manager {//}
 		//triggers.set("sinkOpen",1);
 		#end
 		
+		#if flash
 		FORMAT = new flash.text.TextFormat("04b03", 8, 0xffffff);
+		#else
+		FORMAT = new flash.text.TextFormat("DefaultFont", 8, 0xffffff);
+		#end
 		//FORMAT.font = DefaultFont;
 
 		buffer = new Buffer(110,108, UPSCALE, false, 0x0, USE_SCALE2X);
@@ -164,7 +170,9 @@ class Manager {//}
 		dm.add(buffer2.render,0);
 		buffer2.setTexture( t, 0.07, flash.display.BlendMode.OVERLAY, true );
 		
+		#if flash
 		haxe.Log.setColor(0xFFFF00);
+		#end
 		
 		drag = buffer.dm.empty(99);
 		
@@ -266,9 +274,9 @@ class Manager {//}
 		root.stage.addEventListener(flash.events.MouseEvent.MOUSE_UP, onMouseUp);
 		
 		#if debug
-		debug = new mt.kiroukou.debug.Stats();
-		debug.x = WID-70;
-		dm.add(debug,10);
+		//debug = new mt.kiroukou.debug.Stats();
+		//debug.x = WID-70;
+		//dm.add(debug,10);
 		#end
 		
 		heroFade = lib.getSprite("heroFade");
@@ -554,13 +562,29 @@ class Manager {//}
 				resolve();
 		}
 		else {
-			switch(pending) {
-				case LOOK	: pop("Not much to say.");
-				case PICK	: pop("I don't need that.");
-				case OPEN	: pop("I can't open that.");
-				case CLOSE	: pop("What?");
-				case USE	: pop("I have no use for that.");
-				case REMEMBER: pop("This doesn't ring a bell...");
+			if (pending == LOOK) {
+				
+				pop("Not much to say.");
+				
+			} else if (pending == PICK) {
+				
+				pop("I don't need that.");
+				
+			} else if (pending == OPEN) {
+				
+				pop("I can't open that.");
+				
+			} else if (pending == CLOSE) {
+				
+				pop("What?");
+				
+			} else if (pending == USE) {
+				
+				pop("I have no use for that.");
+				
+			} else if (pending == REMEMBER) {
+				
+				pop("This doesn't ring a bell...");
 				
 			}
 		}
@@ -723,7 +747,7 @@ class Manager {//}
 				setAction(REMEMBER, function() {
 					if( !hasTriggerSet("firstMemory") ) {
 						pop("The photograph is very old and damaged. The character on the picture is barely recognizable. A woman?|...|Lydia?");
-						afterPop = callback(changeRoom,"kitchen");
+						afterPop = changeRoom.bind ("kitchen");
 					}
 					else
 						changeRoom("kitchen");
@@ -839,7 +863,7 @@ class Manager {//}
 				var s = setSprite( lib.getSprite("ringBack") );
 				s.x+=1;
 				s.y+=1;
-				setAction(REMEMBER, callback(changeRoom, "park"));
+				setAction(REMEMBER, changeRoom.bind ("park"));
 			}
 			else
 				setAction(REMEMBER, "I'm pretty sure it was not normally empty.|But where is its content?");
@@ -865,7 +889,7 @@ class Manager {//}
 			setAction(REMEMBER, function() {
 				pop("Lydia...|As beautiful as in my memories.");
 				if( EXTENDED )
-					afterPop = callback(changeRoom,"cell");
+					afterPop = changeRoom.bind ("cell");
 			});
 			
 			addSpot(42,29,8,6, "Sideboard left door");
@@ -1128,7 +1152,7 @@ class Manager {//}
 						pop("!I'm really sorry sir... but she...");
 						pop("The cellphone abruptly cease to function.");
 						setTrigger("phoneCalled");
-						afterPop = callback(changeRoom,"hell");
+						afterPop = changeRoom.bind ("hell");
 					});
 				else
 					setAction(USE, "!It seems broken or something.");
@@ -1145,7 +1169,7 @@ class Manager {//}
 			hit		: null,
 			spr		: null,
 			name	: name,
-			act		: new Hash(),
+			act		: new Map<String,Dynamic>(),
 		}
 		hotSpots.push(hs);
 		
@@ -1179,7 +1203,7 @@ class Manager {//}
 	
 	function getTip() {
 		SOUNDS.help.play();
-		var tip =
+		//var tip =
 		if( !hasTriggerSet("usedTip") ) {
 			pop("You can use this option to get help if you are stuck in the game. But please, don't use too much!");
 			pop("!Each time you click on HELP, you will get the solution to current situation.");
@@ -1716,7 +1740,7 @@ class Manager {//}
 			if( room=="hell" && player.cx<=6 ) {
 				pop("!Lydia!!!");
 				setTrigger("letterPop");
-				afterPop = callback(changeRoom,"park");
+				afterPop = changeRoom.bind ("park");
 			}
 			
 			player.update();

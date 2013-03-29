@@ -1,6 +1,6 @@
 package mt;
 
-#if !flash9
+#if flash8
 
 class DepthManager {
 

@@ -6,7 +6,7 @@
 	//}
 //}
 
-class World implements haxe.Public {
+@:publicFields class World {
 	//static var OUTWALL = new Cell();
 	public var wid		: Int;
 	public var hei		: Int;
