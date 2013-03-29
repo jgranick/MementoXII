@@ -23,7 +23,7 @@ typedef Hotspot = {
 class Manager {//}
 	static var SHOW_COLLISIONS = false;
 	static var INAMES = new Map();
-	static var SOUNDS = mt.data.Sounds.directory("sfx");
+	static var SOUNDS;
 	static var EXTENDED = true;
 	
 	//static var WALK = "Walk to";
@@ -100,6 +100,8 @@ class Manager {//}
 	
 		
 	public function new(r) {
+		SOUNDS = mt.data.Sounds.directory("sfx");
+		flash.text.Font.registerFont(DefaultFont);
 		ME = this;
 		root = r;
 		root.addEventListener( flash.events.Event.ENTER_FRAME, main );
@@ -312,9 +314,11 @@ class Manager {//}
 			tf.alpha = 0.6;
 			tf.filters = [];
 			tf.width = 46;
+			#if flash
 			var f = tf.getTextFormat();
 			f.align = flash.text.TextFormatAlign.CENTER;
 			tf.setTextFormat(f);
+			#end
 			tf.addEventListener(flash.events.MouseEvent.MOUSE_OVER, function(_) {
 				if( !fl_lockControls )
 					tf.alpha = 1;
@@ -513,9 +517,11 @@ class Manager {//}
 			var name = INAMES.get(i);
 			var tf = makeText( if(name!=null) name else "!!"+i+"!!" );
 			tf.textColor = 0x957E51;
+			#if flash
 			var f = tf.getTextFormat();
 			f.align = flash.text.TextFormatAlign.CENTER;
 			tf.setTextFormat(f);
+			#end
 			//tf.scaleX = tf.scaleY = 1;
 			tf.y = n*18;
 			tf.width = 9*16;
@@ -1649,6 +1655,7 @@ class Manager {//}
 			buffer.postFilters = [];
 		else {
 			var spd = 0.1; // * (1-dispScale);
+			#if flash
 			displace.perlinNoise(50,30, 3, 0, true, false, 7, true, [new flash.geom.Point(-spd*UNIQ++,-spd*UNIQ), new flash.geom.Point(-spd*UNIQ++,-2*spd*UNIQ), new flash.geom.Point(0.5*spd*UNIQ++,1.5*spd*UNIQ)]);
 			buffer.postFilters = [
 				new flash.filters.DisplacementMapFilter(displace, new flash.geom.Point(0,0), 1, 1, dispScale*13,dispScale*15, flash.filters.DisplacementMapFilterMode.WRAP, 0, 1)
@@ -1656,6 +1663,7 @@ class Manager {//}
 			var recal = dispScale<0.2 ? 0. : (dispScale-0.2)/0.8;
 			buffer.render.x = -13*recal;
 			buffer.render.y = -15*recal;
+			#end
 		}
 		
 		if( !fl_pause && !fl_ending ) {

@@ -269,7 +269,9 @@ class Buffer {
 		var tlineLength : UInt = renderBD.width*4;
 		var end : UInt = memBuf.position;
 		var pos : UInt = lineLength;
+		#if flash
 		memBuf.length+=renderBD.width*renderBD.height*4;
+		#end
 		flash.Memory.select(memBuf);
 		var wid = renderBD.width/2;
 		var x = 0;
