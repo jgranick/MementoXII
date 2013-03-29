@@ -38,8 +38,8 @@ class Manager {//}
 	static var ABOUT = "About";
 	
 	static var FORMAT : flash.text.TextFormat;
-	public static var WID = Std.int(flash.Lib.current.stage.stageWidth);
-	public static var HEI = Std.int(flash.Lib.current.stage.stageHeight);
+	public static var WID;
+	public static var HEI;
 	public static var CWID = 8;
 	public static var CHEI = 8;
 	public static var ME : Manager;
@@ -101,6 +101,8 @@ class Manager {//}
 		
 	public function new(r) {
 		SOUNDS = mt.data.Sounds.directory("sfx");
+		WID = Std.int(flash.Lib.current.stage.stageWidth);
+		HEI = Std.int(flash.Lib.current.stage.stageHeight);
 		flash.text.Font.registerFont(DefaultFont);
 		ME = this;
 		root = r;
