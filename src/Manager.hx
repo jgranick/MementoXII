@@ -103,7 +103,9 @@ class Manager {//}
 		SOUNDS = mt.data.Sounds.directory("sfx");
 		WID = Std.int(flash.Lib.current.stage.stageWidth);
 		HEI = Std.int(flash.Lib.current.stage.stageHeight);
+		#if !flash
 		flash.text.Font.registerFont(DefaultFont);
+		#end
 		ME = this;
 		root = r;
 		root.addEventListener( flash.events.Event.ENTER_FRAME, main );
