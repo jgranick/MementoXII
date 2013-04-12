@@ -9,9 +9,7 @@ import World;
 import Type;
 
 @:bitmap("tiles.png") class GfxTiles extends flash.display.BitmapData { }
-#if !flash
 @:font("04B_03.TTF") class DefaultFont extends flash.text.Font { }
-#end
 
 typedef Hotspot = {
 	var hit		: flash.display.Sprite;
@@ -103,9 +101,7 @@ class Manager {//}
 		SOUNDS = mt.data.Sounds.directory("sfx");
 		WID = Std.int(flash.Lib.current.stage.stageWidth);
 		HEI = Std.int(flash.Lib.current.stage.stageHeight);
-		#if !flash
 		flash.text.Font.registerFont(DefaultFont);
-		#end
 		ME = this;
 		root = r;
 		root.addEventListener( flash.events.Event.ENTER_FRAME, main );
@@ -170,11 +166,15 @@ class Manager {//}
 		dm.add(buffer.render,0);
 		//var t = Buffer.makeMosaic(UPSCALE);
 		var t = Buffer.makeScanline(0x0, UPSCALE);
+		#if flash
 		buffer.setTexture( t, 0.07, flash.display.BlendMode.OVERLAY, false );
+		#end
 		
 		buffer2 = new Buffer(buffer.width,180, UPSCALE, true, 0x0, USE_SCALE2X);
-		dm.add(buffer2.render,0);
+		dm.add(buffer2.render, 0);
+		#if flash
 		buffer2.setTexture( t, 0.07, flash.display.BlendMode.OVERLAY, true );
+		#end
 		
 		#if flash
 		haxe.Log.setColor(0xFFFF00);
