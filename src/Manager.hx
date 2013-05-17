@@ -155,26 +155,22 @@ class Manager {//}
 		//triggers.set("sinkOpen",1);
 		#end
 		
-		#if flash
 		FORMAT = new flash.text.TextFormat("04b03", 8, 0xffffff);
-		#else
-		FORMAT = new flash.text.TextFormat("DefaultFont", 8, 0xffffff);
-		#end
 		//FORMAT.font = DefaultFont;
 
 		buffer = new Buffer(110,108, UPSCALE, false, 0x0, USE_SCALE2X);
 		dm.add(buffer.render,0);
 		//var t = Buffer.makeMosaic(UPSCALE);
 		var t = Buffer.makeScanline(0x0, UPSCALE);
-		#if flash
+		//#if flash
 		buffer.setTexture( t, 0.07, flash.display.BlendMode.OVERLAY, false );
-		#end
+		//#end
 		
 		buffer2 = new Buffer(buffer.width,180, UPSCALE, true, 0x0, USE_SCALE2X);
 		dm.add(buffer2.render, 0);
-		#if flash
+		//#if flash
 		buffer2.setTexture( t, 0.07, flash.display.BlendMode.OVERLAY, true );
-		#end
+		//#end
 		
 		#if flash
 		haxe.Log.setColor(0xFFFF00);
@@ -318,11 +314,9 @@ class Manager {//}
 			tf.alpha = 0.6;
 			tf.filters = [];
 			tf.width = 46;
-			#if flash
 			var f = tf.getTextFormat();
 			f.align = flash.text.TextFormatAlign.CENTER;
-			tf.setTextFormat(f);
-			#end
+			tf.setTextFormat(f); 
 			tf.addEventListener(flash.events.MouseEvent.MOUSE_OVER, function(_) {
 				if( !fl_lockControls )
 					tf.alpha = 1;
@@ -521,11 +515,9 @@ class Manager {//}
 			var name = INAMES.get(i);
 			var tf = makeText( if(name!=null) name else "!!"+i+"!!" );
 			tf.textColor = 0x957E51;
-			#if flash
 			var f = tf.getTextFormat();
 			f.align = flash.text.TextFormatAlign.CENTER;
 			tf.setTextFormat(f);
-			#end
 			//tf.scaleX = tf.scaleY = 1;
 			tf.y = n*18;
 			tf.width = 9*16;
