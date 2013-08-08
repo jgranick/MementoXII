@@ -1767,7 +1767,7 @@ class Manager {//}
 		heroFade.y = player.spr.y-4;
 		
 		#if debug
-		debug.custom.text = player.cx+","+player.cy;
+		//debug.custom.text = player.cx+","+player.cy;
 		#end
 	}
 }

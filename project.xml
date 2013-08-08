@@ -12,6 +12,6 @@
 	<source path="gfx" />
 	<source path="fonts" />
 	
-	<haxelib name="pazu" />
+	<haxelib name="openfl" />
 	
 </project>
